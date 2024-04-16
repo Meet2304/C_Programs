@@ -14,14 +14,13 @@ int calculateLB(int path[], int level, int visited[]) {
     int lb = 0;
     for (int i = 0; i < n; i++) {
         if (!visited[i]) {
-            // Find the minimum distance from the current city to unvisited cities
             int minDist = INT_MAX;
             for (int j = 0; j < n; j++) {
                 if (!visited[j] && graph[i][j] < minDist) {
                     minDist = graph[i][j];
                 }
             }
-            lb += minDist; // Add the minimum distance to lower bound
+            lb += minDist;
         }
     }
     return lb;
@@ -33,12 +32,10 @@ void tsp(int level, int cost, int path[], int visited[]) {
     if (level == n) {
         // Check if there's a path back to the starting city
         if (graph[path[level - 1]][0] != 0) {
-            // Calculate the total cost of the tour
-            int totalCost = cost + graph[path[level - 1]][0];
+            int totalCost = cost + graph[path[level - 1]][0]; // Total cost of the tour
             // Update minimum cost if this tour is better
             if (totalCost < minCost) {
                 minCost = totalCost;
-                // Copy the current path to the final path
                 for (int i = 0; i < n; i++) {
                     finalPath[i] = path[i];
                 }
@@ -52,9 +49,7 @@ void tsp(int level, int cost, int path[], int visited[]) {
         if (!visited[i] && graph[path[level - 1]][i] != 0) {
             visited[i] = 1; // Mark city i as visited
             path[level] = i; // Add city i to the current path
-            // Calculate lower bound for the current path
             int lowerBound = calculateLB(path, level, visited);
-            // Prune if the lower bound exceeds the current minimum cost
             if (cost + graph[path[level - 1]][i] + lowerBound < minCost) {
                 tsp(level + 1, cost + graph[path[level - 1]][i], path, visited); // Recur for city i
             }
@@ -64,11 +59,9 @@ void tsp(int level, int cost, int path[], int visited[]) {
 }
 
 int main() {
-    // Input the number of cities
     printf("Enter the number of cities: ");
     scanf("%d", &n);
 
-    // Input distances between cities
     printf("Enter the distances between the cities in the format 'source city, destination city, distance':\n");
     printf("For example, if there are 3 cities, and the distances are: \n");
     printf("0 1 10 (meaning distance from city 0 to city 1 is 10)\n");
