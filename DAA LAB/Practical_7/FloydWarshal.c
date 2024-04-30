@@ -78,9 +78,9 @@ void FloydWarshall(struct Graph* graph) {
     }
 
     // Floyd-Warshall algorithm
-    for(int k = 0; k < size; k++) {
-        for(int i = 0; i < size; i++) {
-            for(int j = 0; j < size; j++) {
+    for(int k = 0; k < size; k++) {   //Iterates over Intermediate Vertex
+        for(int i = 0; i < size; i++) {  //Iterates over Source
+            for(int j = 0; j < size; j++) {   //Iterates over Destination
                 if (D[i][k] != INF && D[k][j] != INF) {
                     D[i][j] = min(D[i][j], D[i][k] + D[k][j]);
                 }
